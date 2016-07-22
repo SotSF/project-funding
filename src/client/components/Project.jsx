@@ -66,6 +66,13 @@ const styles = {
         percentFunded: {
             marginBottom: 10
         }
+    },
+    recipientHeader: {
+        marginBottom: 5
+    },
+    via: {
+        color: '#666',
+        fontSize: '14px'
     }
 };
 
@@ -164,6 +171,10 @@ class ProjectProgress extends React.Component {
                     <span style={{ color }}>Funding Progress: {percentFunded.toFixed(2)}%</span>
                 </h4>
                 <LinearProgress mode="determinate" value={percentFunded} color={color} />
+                <SendMoneyTo
+                    recipient={this.props.project['Send Money To']}
+                    via={this.props.project['Send Via']}
+                />
             </div>
         );
     }
@@ -212,6 +223,41 @@ class ProjectProgress extends React.Component {
             rgb   = transitionRGB(this.percentFunded(), 100, red, green);
 
         return `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+    }
+}
+
+
+class SendMoneyTo extends React.Component {
+    render () {
+        return (
+            <div>
+                <h3 style={styles.recipientHeader}>
+                    Send donations to <span style={styles.recipient}>{this.props.recipient}</span>
+                </h3>
+                <div style={styles.via}>
+                    Venmo:
+                    <span
+                        ref={(c) => this.via = c}
+                        onClick={this.clickedVia}
+                    >
+                        {this.props.via[1]}
+                    </span>
+                </div>
+            </div>
+        );
+    }
+
+    clickedVia = () => {
+        let range;
+        if (document.selection) {
+            range = document.body.createTextRange();
+            range.moveToElementText(this.via);
+            range.select();
+        } else if (window.getSelection) {
+            range = document.createRange();
+            range.selectNode(this.via);
+            window.getSelection().addRange(range);
+        }
     }
 }
 
