@@ -57,7 +57,6 @@ class ProjectTile extends React.Component {
         return (
             <GridTile
                 title={this.props.project.Project}
-                subtitle={<span>by <b>{this.props.project.author}</b></span>}
                 style={styles.projectTile}
                 onClick={this.clicked}
                 onMouseOver={() => this.setState({ hover: true  })}
