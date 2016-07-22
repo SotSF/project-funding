@@ -6,7 +6,6 @@
   "dependencies": {
     "jquery": "2.1.4",
     "jsonfile": "2.3.1",
-    "lodash": "4.13.1",
     "material-ui": "0.15.2",
     "react": "15.2.1",
     "react-dom": "15.2.1",
@@ -26,8 +25,7 @@
     "grunt-exorcise": "2.1.1"
   },
   "scripts": {
-    "fetch": "./src/scripts/getProjectData.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "fetch": "./src/scripts/getProjectData.js"
   },
   "author": "",
   "license": "ISC"
