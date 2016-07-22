@@ -235,7 +235,7 @@ class SendMoneyTo extends React.Component {
                     Send donations to <span style={styles.recipient}>{this.props.recipient}</span>
                 </h3>
                 <div style={styles.via}>
-                    Venmo:
+                    Venmo:&nbsp;
                     <span
                         ref={(c) => this.via = c}
                         onClick={this.clickedVia}
