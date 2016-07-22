@@ -49,7 +49,9 @@ const styles = {
     },
     projectDescription: {
         lineHeight: '180%',
-        color: '#666'
+        color: '#666',
+        maxHeight: 200,
+        overflowY: 'scroll'
     },
 
     progress: {
@@ -127,9 +129,9 @@ class Project extends React.Component {
                     </div>
                     <div style={styles.projectHeader}>
                         <h1 style={styles.projectName}>{project.Project}</h1>
-                        <span style={styles.projectDescription}>
+                        <div style={styles.projectDescription}>
                             {project.Description}
-                        </span>
+                        </div>
 
                         <ProjectProgress project={project} />
                     </div>
@@ -152,11 +154,12 @@ class ProjectProgress extends React.Component {
 
         // Goal may not be specified (sometimes it's silly things like "TBD")
         if (_.isNull(stats.goal)) stats.goal = 'Unspecified';
+        else stats.goal = '$' + stats.goal;
 
         return (
             <div>
                 <h4 style={styles.progress.percentFunded}>
-                    <span style={styles.progress.goal}>Goal: ${stats.goal}</span>
+                    <span style={styles.progress.goal}>Goal: {stats.goal}</span>
                     <span style={styles.progress.raised}>Raised: ${stats.raised}</span>
                     <span style={{ color }}>Funding Progress: {percentFunded.toFixed(2)}%</span>
                 </h4>
@@ -187,7 +190,7 @@ class ProjectProgress extends React.Component {
     percentFunded () {
         let stats = this.stats(),
             percent = stats.raised / stats.goal * 100;
-        return _.isNaN(percent) ? 0 : percent;
+        return _.isNaN(percent) ? 100 : percent;
     }
 
     progressColor () {
