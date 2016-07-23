@@ -44624,7 +44624,10 @@ var styles = {
         fontSize: 60,
         textAlign: 'center',
         margin: '10px 0',
-        fontFamily: 'Wizard, Roboto'
+        fontFamily: 'Wizard, Roboto',
+        background: '-webkit-linear-gradient(#eb2200, #ede000)',
+        '-webkit-background-clip': 'text',
+        '-webkit-text-fill-color': 'transparent'
     }
 };
 
@@ -44637,7 +44640,7 @@ var App = function App() {
         { style: styles.appContainer },
         _react2.default.createElement(
             'h1',
-            { style: styles.appHeader },
+            { id: 'app-header', style: styles.appHeader },
             'Servant Projects'
         ),
         _react2.default.createElement(_ProjectGrid2.default, { projects: shuffledProjects() })

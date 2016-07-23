@@ -13,7 +13,10 @@ const styles = {
         fontSize: 60,
         textAlign: 'center',
         margin: '10px 0',
-        fontFamily: 'Wizard, Roboto'
+        fontFamily: 'Wizard, Roboto',
+        background: '-webkit-linear-gradient(#eb2200, #ede000)',
+        '-webkit-background-clip': 'text',
+        '-webkit-text-fill-color': 'transparent'
     }
 };
 
@@ -21,7 +24,7 @@ const styles = {
 let shuffledProjects = _.once(() => _.shuffle(window.projects));
 let App = () => (
     <div style={styles.appContainer}>
-        <h1 style={styles.appHeader}>Servant Projects</h1>
+        <h1 id="app-header" style={styles.appHeader}>Servant Projects</h1>
         <ProjectGrid projects={shuffledProjects()} />
     </div>
 );
