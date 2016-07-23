@@ -24,7 +24,7 @@ const styles = {
 let shuffledProjects = _.once(() => _.shuffle(window.projects));
 let App = () => (
     <div style={styles.appContainer}>
-        <h1 id="app-header" style={styles.appHeader}>Servant Projects</h1>
+        <h1 id="app-header" style={styles.appHeader}>Eksperimental Magiks</h1>
         <ProjectGrid projects={shuffledProjects()} />
     </div>
 );

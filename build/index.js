@@ -44641,7 +44641,7 @@ var App = function App() {
         _react2.default.createElement(
             'h1',
             { id: 'app-header', style: styles.appHeader },
-            'Servant Projects'
+            'Eksperimental Magiks'
         ),
         _react2.default.createElement(_ProjectGrid2.default, { projects: shuffledProjects() })
     );
