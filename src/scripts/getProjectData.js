@@ -23,7 +23,7 @@ async.series([
                 'min-row': 2,
                 'max-row': 12,
                 'min-col': 1,
-                'max-col': 43
+                'max-col': 47
             }, function (err, cells) {
                 getProjects(cells);
             });
