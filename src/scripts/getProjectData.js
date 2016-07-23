@@ -1,4 +1,3 @@
-#!/usr/local/bin/node
 
 var GoogleSpreadsheet = require('google-spreadsheet'),
     async = require('async'),
