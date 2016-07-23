@@ -44619,6 +44619,12 @@ var styles = {
     appContainer: {
         width: 1000,
         margin: 'auto'
+    },
+    appHeader: {
+        fontSize: 60,
+        textAlign: 'center',
+        margin: '10px 0',
+        fontFamily: 'Wizard, Roboto'
     }
 };
 
@@ -44629,6 +44635,11 @@ var App = function App() {
     return _react2.default.createElement(
         'div',
         { style: styles.appContainer },
+        _react2.default.createElement(
+            'h1',
+            { style: styles.appHeader },
+            'Servant Projects'
+        ),
         _react2.default.createElement(_ProjectGrid2.default, { projects: shuffledProjects() })
     );
 };
