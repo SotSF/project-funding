@@ -93,7 +93,7 @@ function getProjectImage (url, projectName) {
     
     // If there's already a file at that location, we're good
     try {
-        fs.accessSync(imagePath, fs.F_OK);
+        fs.statSync(imagePath, fs.F_OK);
         return imageRelativePath;
     } catch (e) {
         // Otherwise there's no file and no URL. Return `null`
