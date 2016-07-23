@@ -148,7 +148,7 @@ class Project extends React.Component {
     }
 
     back () {
-        window.location = '/#/';
+        window.location = '#/';
     }
 }
 

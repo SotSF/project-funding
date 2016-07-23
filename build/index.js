@@ -44840,7 +44840,7 @@ var Project = function (_React$Component) {
     }, {
         key: 'back',
         value: function back() {
-            window.location = '/#/';
+            window.location = '#/';
         }
     }]);
 
