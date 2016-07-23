@@ -1,4 +1,5 @@
 
+import $ from 'jquery';
 import _ from 'underscore';
 import React from 'react';
 import LinearProgress from 'material-ui/LinearProgress';
@@ -84,6 +85,7 @@ class Project extends React.Component {
 
     componentDidMount () {
         this.ensureImageCover();
+        $('html,body').scrollTop(0);
     }
 
     ensureImageCover() {
