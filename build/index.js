@@ -44626,8 +44626,8 @@ var styles = {
         margin: '10px 0',
         fontFamily: 'Wizard, Roboto',
         background: '-webkit-linear-gradient(#eb2200, #ede000)',
-        '-webkit-background-clip': 'text',
-        '-webkit-text-fill-color': 'transparent'
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent'
     }
 };
 
@@ -44657,6 +44657,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _jquery = require('jquery');
+
+var _jquery2 = _interopRequireDefault(_jquery);
 
 var _underscore = require('underscore');
 
@@ -44769,6 +44773,7 @@ var Project = function (_React$Component) {
         key: 'componentDidMount',
         value: function componentDidMount() {
             this.ensureImageCover();
+            (0, _jquery2.default)('html,body').scrollTop(0);
         }
     }, {
         key: 'ensureImageCover',
@@ -45037,7 +45042,7 @@ var SendMoneyTo = function (_React$Component3) {
 
 exports.default = Project;
 
-},{"material-ui/LinearProgress":199,"material-ui/svg-icons/navigation/arrow-back":210,"react":404,"underscore":418}],422:[function(require,module,exports){
+},{"jquery":79,"material-ui/LinearProgress":199,"material-ui/svg-icons/navigation/arrow-back":210,"react":404,"underscore":418}],422:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -45123,7 +45128,7 @@ var ProjectTile = function (_React$Component2) {
         var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(ProjectTile).call(this, props));
 
         _this2.clicked = function () {
-            window.location = '#/' + _this2.props.project.Project;
+            window.location = '#/' + encodeURIComponent(_this2.props.project.Project);
         };
 
         _this2.state = {
