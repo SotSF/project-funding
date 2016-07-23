@@ -1,5 +1,4 @@
 .idea
-build
 google-generated-creds.json
 node_modules
 projectData.json
