@@ -21,12 +21,11 @@ async.series([
             var crowd_funding_ws = _.findWhere(info.worksheets, { title: 'Crowd Funding' });
             crowd_funding_ws.getCells({
                 'min-row': 2,
-                'max-row': 13,
+                'max-row': 12,
                 'min-col': 1,
                 'max-col': 41
             }, function (err, cells) {
-
-                var columns = getProjects(cells);
+                getProjects(cells);
             });
         });
     }
@@ -75,21 +74,18 @@ function extractProjectDataFromCol(col, headers, cells) {
         return values.length === 1 ? values[0] : values;
     });
 
-    return _.object(_.pluck(headers, '_value'), headerData);
+    var projectJson = _.object(_.pluck(headers, '_value'), headerData);
+    projectJson['Image URL'] = getProjectImage(projectName);
+
+    return projectJson;
 }
 
 
-function getProjectImage (url, projectName) {
+function getProjectImage (projectName) {
     // If there's a URL provided, go get it
     var imageRelativePath = 'static/img/' + projectName + '.jpg';
     var imagePath = path.resolve(PROJECT_ROOT, imageRelativePath);
-    if (url) {
-        download(url, imagePath, function () {
-            console.log('Fetched image for project ' + projectName);
-        });
-        return imageRelativePath;
-    }
-    
+
     // If there's already a file at that location, we're good
     try {
         fs.statSync(imagePath, fs.F_OK);
