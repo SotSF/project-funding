@@ -60,7 +60,7 @@ function extractProjectDataFromCol(col, headers, cells) {
         return (cell.col === col || cell.col === col + 1) && cell.row >= 2;
     });
 
-    let projectName;
+    var projectName;
     var headerData = _.map(headers, function (header) {
         var values = _.pluck(_.where(projectData, { row: header.row }), '_value');
 
