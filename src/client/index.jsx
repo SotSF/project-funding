@@ -14,7 +14,7 @@ injectTapEventPlugin();
 
 $(function () {
     // Query for the latest project data
-    $.get('/projectData.json').done(function (projectList) {
+    $.get('projectData.json').done(function (projectList) {
         // Shuffle the JSON
         window.projects = _.object(
             _.pluck(projectList, 'Project'),
