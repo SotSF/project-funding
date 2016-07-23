@@ -15,8 +15,8 @@ const styles = {
         margin: '10px 0',
         fontFamily: 'Wizard, Roboto',
         background: '-webkit-linear-gradient(#eb2200, #ede000)',
-        '-webkit-background-clip': 'text',
-        '-webkit-text-fill-color': 'transparent'
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent'
     }
 };
 
