@@ -2,6 +2,7 @@
 import $ from 'jquery';
 import _ from 'underscore';
 import React from 'react';
+import marked from 'marked';
 import LinearProgress from 'material-ui/LinearProgress';
 import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 
@@ -138,10 +139,10 @@ class Project extends React.Component {
                     </div>
                     <div style={styles.projectHeader}>
                         <h1 style={styles.projectName}>{project.Project}</h1>
-                        <div style={styles.projectDescription}>
-                            {project.Description}
-                        </div>
-
+                        <div
+                            style={styles.projectDescription}
+                            dangerouslySetInnerHTML={{__html: marked(project.Description)}}
+                        />
                         <ProjectProgress project={project} />
                     </div>
                 </div>
