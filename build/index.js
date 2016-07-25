@@ -45081,6 +45081,7 @@ var styles = {
         marginBottom: 24
     },
     projectTile: {
+        transition: _transitions2.default.easeOut('750ms'),
         cursor: 'pointer'
     }
 };
@@ -45147,11 +45148,15 @@ var ProjectTile = function (_React$Component2) {
                 opacity: this.state.hover ? 1 : 0.5
             };
 
+            var projectTileStyle = Object.assign({
+                boxShadow: this.state.hover ? 'rgba(0, 0, 0, 0.188235) 0px 10px 30px, rgba(0, 0, 0, 0.227451) 0px 6px 10px' : null
+            }, styles.projectTile);
+
             return _react2.default.createElement(
                 _GridList.GridTile,
                 {
                     title: this.props.project.Project,
-                    style: styles.projectTile,
+                    style: projectTileStyle,
                     onClick: this.clicked,
                     onMouseOver: function onMouseOver() {
                         return _this3.setState({ hover: true });
