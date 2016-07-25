@@ -57,7 +57,7 @@ class ProjectTile extends React.Component {
 
         let projectTileStyle = Object.assign({
             boxShadow: this.state.hover
-                ? 'rgba(0, 0, 0, 0.188235) 0px 10px 30px, rgba(0, 0, 0, 0.227451) 0px 6px 10px'
+                ? 'rgba(0, 0, 0, 0.156863) 0px 3px 10px, rgba(0, 0, 0, 0.227451) 0px 3px 10px'
                 : null
         }, styles.projectTile);
 
