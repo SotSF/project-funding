@@ -15,6 +15,7 @@ const styles = {
         marginBottom: 24
     },
     projectTile: {
+        transition: transitions.easeOut(),
         cursor: 'pointer'
     }
 };
@@ -54,10 +55,16 @@ class ProjectTile extends React.Component {
             opacity: this.state.hover ? 1 : 0.5
         };
 
+        let projectTileStyle = Object.assign({
+            boxShadow: this.state.hover
+                ? 'rgba(0, 0, 0, 0.188235) 0px 10px 30px, rgba(0, 0, 0, 0.227451) 0px 6px 10px'
+                : null
+        }, styles.projectTile);
+
         return (
             <GridTile
                 title={this.props.project.Project}
-                style={styles.projectTile}
+                style={projectTileStyle}
                 onClick={this.clicked}
                 onMouseOver={() => this.setState({ hover: true  })}
                 onMouseOut={ () => this.setState({ hover: false })}
