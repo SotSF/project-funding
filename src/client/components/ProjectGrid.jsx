@@ -15,7 +15,7 @@ const styles = {
         marginBottom: 24
     },
     projectTile: {
-        transition: transitions.easeOut(),
+        transition: transitions.easeOut('750ms'),
         cursor: 'pointer'
     }
 };
