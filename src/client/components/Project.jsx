@@ -232,6 +232,7 @@ class ProjectProgress extends React.Component {
 
 class SendMoneyTo extends React.Component {
     render () {
+        let venmo_id = this.props.via[1].replace('@', '');
         return (
             <div>
                 <h3 style={styles.recipientHeader}>
@@ -239,28 +240,12 @@ class SendMoneyTo extends React.Component {
                 </h3>
                 <div style={styles.via}>
                     Venmo:&nbsp;
-                    <span
-                        ref={(c) => this.via = c}
-                        onClick={this.clickedVia}
-                    >
+                    <a href={`https://venmo.com/${encodeURIComponent(venmo_id)}`} target="_blank">
                         {this.props.via[1]}
-                    </span>
+                    </a>
                 </div>
             </div>
         );
-    }
-
-    clickedVia = () => {
-        let range;
-        if (document.selection) {
-            range = document.body.createTextRange();
-            range.moveToElementText(this.via);
-            range.select();
-        } else if (window.getSelection) {
-            range = document.createRange();
-            range.selectNode(this.via);
-            window.getSelection().addRange(range);
-        }
     }
 }
 

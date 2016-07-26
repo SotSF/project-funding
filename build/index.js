@@ -46357,35 +46357,15 @@ var SendMoneyTo = function (_React$Component3) {
     _inherits(SendMoneyTo, _React$Component3);
 
     function SendMoneyTo() {
-        var _Object$getPrototypeO;
-
-        var _temp, _this4, _ret2;
-
         _classCallCheck(this, SendMoneyTo);
 
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
-        }
-
-        return _ret2 = (_temp = (_this4 = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(SendMoneyTo)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this4), _this4.clickedVia = function () {
-            var range = void 0;
-            if (document.selection) {
-                range = document.body.createTextRange();
-                range.moveToElementText(_this4.via);
-                range.select();
-            } else if (window.getSelection) {
-                range = document.createRange();
-                range.selectNode(_this4.via);
-                window.getSelection().addRange(range);
-            }
-        }, _temp), _possibleConstructorReturn(_this4, _ret2);
+        return _possibleConstructorReturn(this, Object.getPrototypeOf(SendMoneyTo).apply(this, arguments));
     }
 
     _createClass(SendMoneyTo, [{
         key: 'render',
         value: function render() {
-            var _this5 = this;
-
+            var venmo_id = this.props.via[1].replace('@', '');
             return _react2.default.createElement(
                 'div',
                 null,
@@ -46404,13 +46384,8 @@ var SendMoneyTo = function (_React$Component3) {
                     { style: styles.via },
                     'Venmo: ',
                     _react2.default.createElement(
-                        'span',
-                        {
-                            ref: function ref(c) {
-                                return _this5.via = c;
-                            },
-                            onClick: this.clickedVia
-                        },
+                        'a',
+                        { href: 'https://venmo.com/' + encodeURIComponent(venmo_id), target: '_blank' },
                         this.props.via[1]
                     )
                 )
