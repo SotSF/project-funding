@@ -5,6 +5,7 @@ import React from 'react';
 import marked from 'marked';
 import LinearProgress from 'material-ui/LinearProgress';
 import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
+import Util from '../util';
 
 
 const styles = {
@@ -158,9 +159,10 @@ class Project extends React.Component {
 
 class ProjectProgress extends React.Component {
     render() {
-        let stats = this.stats(),
-            percentFunded = this.percentFunded(),
-            color = this.progressColor();
+        let project = this.props.project,
+            stats = Util.stats(project),
+            percentFunded = Util.percentFunded(project),
+            color = Util.progressColor(project);
 
         // Goal may not be specified (sometimes it's silly things like "TBD")
         if (_.isNull(stats.goal)) stats.goal = 'Unspecified';
@@ -175,57 +177,11 @@ class ProjectProgress extends React.Component {
                 </h4>
                 <LinearProgress mode="determinate" value={percentFunded} color={color} />
                 <SendMoneyTo
-                    recipient={this.props.project['Send Money To']}
-                    via={this.props.project['Send Via']}
+                    recipient={project['Send Money To']}
+                    via={project['Send Via']}
                 />
             </div>
         );
-    }
-
-    stats () {
-        function parseMoney (value) {
-            if (value === void 0) {
-                return null;
-            } else if (value[0] === '$') {
-                return parseFloat(value.slice(1));
-            } else if (_.isNaN(parseFloat(value))) {
-                return null;
-            } else {
-                return parseFloat(value);
-            }
-        }
-
-        return {
-            goal   : parseMoney(this.props.project['Project Goal']),
-            raised : parseMoney(this.props.project['Raised Total'][0])
-        }
-    }
-
-    percentFunded () {
-        let stats = this.stats(),
-            percent = stats.raised / stats.goal * 100;
-        return _.isNaN(percent) ? 100 : percent;
-    }
-
-    progressColor () {
-        // Basic interpolation helper
-        function transition (value, maximum, start_point, end_point) {
-            return Math.round(start_point + (end_point - start_point) * value / maximum);
-        }
-
-        function transitionRGB (value, maximum, rgb1, rgb2) {
-            return {
-                r: transition(value, maximum, rgb1.r, rgb2.r),
-                g: transition(value, maximum, rgb1.g, rgb2.g),
-                b: transition(value, maximum, rgb1.b, rgb2.b)
-            };
-        }
-
-        let green = { r:  20, g: 140, b: 20 },
-            red   = { r: 255, g:  80, b: 80 },
-            rgb   = transitionRGB(this.percentFunded(), 100, red, green);
-
-        return `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
     }
 }
 
