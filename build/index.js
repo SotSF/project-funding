@@ -73580,10 +73580,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var styles = {
-    appContainer: {
-        width: 1000,
-        margin: 'auto'
-    },
     appHeader: {
         fontSize: 60,
         textAlign: 'center',
@@ -73608,7 +73604,7 @@ var shuffledProjects = _underscore2.default.once(function () {
 var App = function App() {
     return _react2.default.createElement(
         'div',
-        { style: styles.appContainer },
+        null,
         _react2.default.createElement(
             'h1',
             { style: styles.appHeader },
@@ -73770,11 +73766,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var styles = {
     backButtonWrapper: {
-        position: 'absolute',
-        width: 1000,
-        left: '50%',
-        top: 10,
-        marginLeft: '-500px'
+        marginTop: 10
     },
     backButton: {
         cursor: 'pointer',
@@ -73782,10 +73774,7 @@ var styles = {
         height: 50
     },
     projectWrapper: {
-        position: 'absolute',
-        left: '50%',
-        top: '50%',
-        margin: '-150px 0 0 -500px'
+        marginTop: 30
     },
     projectImgWrapper: {
         width: 300,
@@ -74304,14 +74293,23 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
         // Shuffle the JSON
         window.projects = _underscore2.default.object(_underscore2.default.pluck(projectList, 'Project'), _underscore2.default.omit(projectList, 'Project'));
 
+        var appContainerStyle = {
+            width: 1000,
+            margin: 'auto'
+        };
+
         _reactDom2.default.render(_react2.default.createElement(
             _MuiThemeProvider2.default,
             null,
             _react2.default.createElement(
-                _reactRouter.Router,
-                { history: _reactRouter.hashHistory },
-                _react2.default.createElement(_reactRouter.Route, { path: '/', component: _App2.default }),
-                _react2.default.createElement(_reactRouter.Route, { path: '/:projectName', component: _Project2.default })
+                'div',
+                { style: appContainerStyle },
+                _react2.default.createElement(
+                    _reactRouter.Router,
+                    { history: _reactRouter.hashHistory },
+                    _react2.default.createElement(_reactRouter.Route, { path: '/', component: _App2.default }),
+                    _react2.default.createElement(_reactRouter.Route, { path: '/:projectName', component: _Project2.default })
+                )
             )
         ), document.getElementById('app-container'));
     });

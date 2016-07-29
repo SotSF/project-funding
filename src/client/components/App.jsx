@@ -6,10 +6,6 @@ import ProjectGrid from './ProjectGrid.jsx';
 
 
 const styles = {
-    appContainer: {
-        width: 1000,
-        margin: 'auto'
-    },
     appHeader: {
         fontSize: 60,
         textAlign: 'center',
@@ -31,7 +27,7 @@ const styles = {
 
 let shuffledProjects = _.once(() => _.shuffle(window.projects));
 let App = () => (
-    <div style={styles.appContainer}>
+    <div>
         <h1 style={styles.appHeader}>Eksperimental Magiks</h1>
         <Explanation />
         <ProjectGrid projects={shuffledProjects()} />

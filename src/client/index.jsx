@@ -21,12 +21,19 @@ $(function () {
             _.omit(projectList, 'Project')
         );
 
+        let appContainerStyle = {
+            width: 1000,
+            margin: 'auto'
+        };
+
         ReactDom.render(
             <MuiThemeProvider>
-                <Router history={hashHistory}>
-                    <Route path="/" component={App}/>
-                    <Route path="/:projectName" component={Project}/>
-                </Router>
+                <div style={appContainerStyle}>
+                    <Router history={hashHistory}>
+                        <Route path="/" component={App}/>
+                        <Route path="/:projectName" component={Project}/>
+                    </Router>
+                </div>
             </MuiThemeProvider>,
             document.getElementById('app-container')
         );

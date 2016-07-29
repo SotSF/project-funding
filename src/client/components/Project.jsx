@@ -10,11 +10,7 @@ import Util from '../util';
 
 const styles = {
     backButtonWrapper: {
-        position: 'absolute',
-        width: 1000,
-        left: '50%',
-        top: 10,
-        marginLeft: '-500px'
+        marginTop: 10
     },
     backButton: {
         cursor: 'pointer',
@@ -22,10 +18,7 @@ const styles = {
         height: 50
     },
     projectWrapper: {
-        position: 'absolute',
-        left: '50%',
-        top: '50%',
-        margin: '-150px 0 0 -500px'
+        marginTop: 30
     },
     projectImgWrapper: {
         width: 300,
