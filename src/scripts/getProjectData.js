@@ -2,6 +2,7 @@
 var GoogleSpreadsheet = require('google-spreadsheet'),
     async = require('async'),
     _ = require('underscore'),
+    fs = require('fs'),
     jsonfile = require('jsonfile'),
     path = require('path');
 
@@ -21,7 +22,7 @@ async.series([
             var crowd_funding_ws = _.findWhere(info.worksheets, { title: 'Crowd Funding' });
             crowd_funding_ws.getCells({
                 'min-row': 2,
-                'max-row': 12,
+                'max-row': 100,
                 'min-col': 1,
                 'max-col': 51
             }, function (err, cells) {
@@ -37,6 +38,11 @@ function getProjects(cells) {
     var projectCols = _.filter(_.range(1, maxRowLength + 1), function (colNum) {
         if (colNum === 1) return false;
         return _.findWhere(cells, { row: 2, col: colNum });
+    });
+
+    // We don't care about rows 13-23, they will not be used
+    cells = _.filter(cells, function (cell) {
+        return cell.row < 13 || cell.row > 23;
     });
 
     var headers = getHeaders(cells);
@@ -76,6 +82,7 @@ function extractProjectDataFromCol(col, headers, cells) {
 
     var projectJson = _.object(_.pluck(headers, '_value'), headerData);
     projectJson['Image URL'] = getProjectImage(projectName);
+    projectJson['Expenditures'] = getProjectExpenditures(projectData);
 
     return projectJson;
 }
@@ -99,9 +106,45 @@ function getProjectImage (projectName) {
 }
 
 
-var fs = require('fs'),
-    request = require('request');
+function getProjectExpenditures (projectData) {
+    var expendituresStartRow = 25,
+        itemCol = _.findWhere(projectData, { row: 24, _value: 'Item' }).col,
+        costCol = _.findWhere(projectData, { row: 24, _value: 'Cost' }).col;
 
-function download (uri, filename, callback){
-    request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
+    return _.chain(projectData)
+        .filter(function (cell) {
+            return cell.row >= expendituresStartRow;
+        })
+        .groupBy('row')
+        .map(function (row) {
+            var itemCell = _.findWhere(row, { col: itemCol }),
+                costCell = _.findWhere(row, { col: costCol });
+
+            // If there's no item listed, just ditch it
+            if (!itemCell) {
+                return null;
+            }
+
+            return {
+                item: itemCell._value,
+                cost: parseCost(costCell)
+            };
+        })
+
+        // Remove any null-rows that didn't have an item column
+        .filter(_.identity)
+        .value();
+
+    function parseCost (costCell) {
+        if (!costCell) return null;
+
+        var cost = costCell._value.trim();
+        if (cost[0] === '$') {
+            return parseFloat(cost.slice(1));
+        } else if (!_.isNaN(parseFloat(cost))) {
+            return parseFloat(cost);
+        } else {
+            return null;
+        }
+    }
 }
