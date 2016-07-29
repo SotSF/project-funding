@@ -73801,9 +73801,7 @@ var styles = {
     },
     projectDescription: {
         lineHeight: '180%',
-        color: '#666',
-        maxHeight: 200,
-        overflowY: 'scroll'
+        color: '#666'
     },
 
     progress: {
