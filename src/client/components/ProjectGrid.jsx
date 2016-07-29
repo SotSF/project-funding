@@ -1,7 +1,9 @@
 
 import React from 'react';
-import {GridList, GridTile} from 'material-ui/GridList';
+import {GridList, GridTile, IconButton, Paper, Popover} from 'material-ui';
 import transitions from 'material-ui/styles/transitions';
+import SecretFireLogoIcon from './LogoIcon.jsx';
+import Util from '../util';
 
 const styles = {
     root: {
@@ -68,6 +70,7 @@ class ProjectTile extends React.Component {
                 onClick={this.clicked}
                 onMouseOver={() => this.setState({ hover: true  })}
                 onMouseOut={ () => this.setState({ hover: false })}
+                actionIcon={<TileIcon project={this.props.project} />}
             >
                 <img style={imgStyle} src={this.props.project['Image URL']} />
             </GridTile>
@@ -76,6 +79,52 @@ class ProjectTile extends React.Component {
 
     clicked = () => {
         window.location = `#/${encodeURIComponent(this.props.project.Project)}`;
+    }
+}
+
+
+class TileIcon extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            open: false
+        };
+    }
+
+    render () {
+        let popoverStyle = {
+            padding: '2px 5px',
+            backgroundColor: 'black',
+            color: 'white'
+        };
+
+        return (
+            <IconButton>
+                <SecretFireLogoIcon
+                    color={Util.progressColor(this.props.project)}
+                    onMouseOver={(e) => this.showPopover(e)}
+                />
+                <Popover
+                  open={this.state.open}
+                  anchorEl={this.state.anchorEl}
+                  anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+                  targetOrigin={{horizontal: 'left', vertical: 'top'}}
+                  onRequestClose={() => this.setState({ open: false })}
+                  useLayerForClickAway={false}
+                  style={popoverStyle}
+                >
+                    {Math.round(Util.percentFunded(this.props.project))}% funded
+                </Popover>
+            </IconButton>
+        );
+    }
+
+    showPopover (event) {
+        this.setState({
+            open: true,
+            anchorEl: event.currentTarget
+        });
     }
 }
 
