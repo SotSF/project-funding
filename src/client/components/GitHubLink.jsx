@@ -1,24 +1,42 @@
 
 import React from 'react';
+import transitions from 'material-ui/styles/transitions';
 
-let GitHubLogo = () => {
-    let styles = {
-        link: {
-            position: 'absolute',
-            top: 10,
-            right: 10
-        },
-        img: {
-            width: 30,
-            height: 30
-        }
-    };
+class GitHubLogo extends React.Component {
+    constructor (props) {
+        super(props);
+        this.state = {
+            hover: false
+        };
+    }
 
-    return (
-        <a style={styles.link} href="https://github.com/SotSF/project-funding" target="_blank">
-            <img style={styles.img} src="static/img/github-logo.png" />
-        </a>
-    );
+    render () {
+        let styles = {
+            link: {
+                position: 'absolute',
+                top: 10,
+                right: 10,
+                opacity: this.state.hover ? 0.54 : 0.38,
+                transition: transitions.easeOut()
+            },
+            img: {
+                width: 30,
+                height: 30
+            }
+        };
+
+        return (
+            <a
+                style={styles.link}
+                href="https://github.com/SotSF/project-funding"
+                target="_blank"
+                onMouseOver={() => this.setState({ hover: true })}
+                onMouseLeave={() => this.setState({ hover: false })}
+            >
+                <img style={styles.img} src="static/img/github-logo.png" />
+            </a>
+        );
+    }
 };
 
 export default GitHubLogo;

@@ -73692,35 +73692,83 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _transitions = require('material-ui/styles/transitions');
+
+var _transitions2 = _interopRequireDefault(_transitions);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var GitHubLogo = function GitHubLogo() {
-    var styles = {
-        link: {
-            position: 'absolute',
-            top: 10,
-            right: 10
-        },
-        img: {
-            width: 30,
-            height: 30
-        }
-    };
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-    return _react2.default.createElement(
-        'a',
-        { style: styles.link, href: 'https://github.com/SotSF/project-funding', target: '_blank' },
-        _react2.default.createElement('img', { style: styles.img, src: 'static/img/github-logo.png' })
-    );
-};
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var GitHubLogo = function (_React$Component) {
+    _inherits(GitHubLogo, _React$Component);
+
+    function GitHubLogo(props) {
+        _classCallCheck(this, GitHubLogo);
+
+        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(GitHubLogo).call(this, props));
+
+        _this.state = {
+            hover: false
+        };
+        return _this;
+    }
+
+    _createClass(GitHubLogo, [{
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            var styles = {
+                link: {
+                    position: 'absolute',
+                    top: 10,
+                    right: 10,
+                    opacity: this.state.hover ? 0.54 : 0.38,
+                    transition: _transitions2.default.easeOut()
+                },
+                img: {
+                    width: 30,
+                    height: 30
+                }
+            };
+
+            return _react2.default.createElement(
+                'a',
+                {
+                    style: styles.link,
+                    href: 'https://github.com/SotSF/project-funding',
+                    target: '_blank',
+                    onMouseOver: function onMouseOver() {
+                        return _this2.setState({ hover: true });
+                    },
+                    onMouseLeave: function onMouseLeave() {
+                        return _this2.setState({ hover: false });
+                    }
+                },
+                _react2.default.createElement('img', { style: styles.img, src: 'static/img/github-logo.png' })
+            );
+        }
+    }]);
+
+    return GitHubLogo;
+}(_react2.default.Component);
+
+;
 
 exports.default = GitHubLogo;
 
-},{"react":583}],601:[function(require,module,exports){
+},{"material-ui/styles/transitions":358,"react":583}],601:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
