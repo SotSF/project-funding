@@ -73849,7 +73849,7 @@ var Project = function (_React$Component) {
                     display: 'inline-block'
                 },
                 projectName: {
-                    fontSize: 56,
+                    fontSize: 42,
                     margin: 0,
                     fontFamily: 'Wizard, Roboto',
                     background: '-webkit-linear-gradient(#eb2200, #ede000)',
