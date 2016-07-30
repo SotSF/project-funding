@@ -126,6 +126,7 @@ class Project extends React.Component {
                     <div style={styles.projectContent}>
                         <h1 style={styles.projectName}>{project.Project}</h1>
                         <div
+                            className="project-description"
                             style={styles.projectDescription}
                             dangerouslySetInnerHTML={{__html: marked(project.Description)}}
                         />

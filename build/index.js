@@ -73906,6 +73906,7 @@ var Project = function (_React$Component) {
                             project.Project
                         ),
                         _react2.default.createElement('div', {
+                            className: 'project-description',
                             style: styles.projectDescription,
                             dangerouslySetInnerHTML: { __html: (0, _marked2.default)(project.Description) }
                         }),
