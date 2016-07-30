@@ -73744,9 +73744,7 @@ var _marked = require('marked');
 
 var _marked2 = _interopRequireDefault(_marked);
 
-var _LinearProgress = require('material-ui/LinearProgress');
-
-var _LinearProgress2 = _interopRequireDefault(_LinearProgress);
+var _materialUi = require('material-ui');
 
 var _arrowBack = require('material-ui/svg-icons/navigation/arrow-back');
 
@@ -73763,68 +73761,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var styles = {
-    backButtonWrapper: {
-        marginTop: 10
-    },
-    backButton: {
-        cursor: 'pointer',
-        width: 50,
-        height: 50
-    },
-    projectWrapper: {
-        marginTop: 30
-    },
-    projectImgWrapper: {
-        width: 300,
-        height: 300,
-        float: 'left',
-        overflow: 'hidden'
-    },
-    projectImg: {
-        height: '100%',
-        transform: 'translateX(-50%)',
-        position: 'relative',
-        left: '50%'
-    },
-    projectHeader: {
-        width: 700,
-        height: 300,
-        paddingLeft: 20,
-        boxSizing: 'border-box',
-        display: 'inline-block'
-    },
-    projectName: {
-        fontSize: 56,
-        margin: 0
-    },
-    projectDescription: {
-        lineHeight: '180%',
-        color: '#666'
-    },
-
-    progress: {
-        goal: {
-            marginRight: 20,
-            color: 'rgb(135, 147, 252)'
-        },
-        raised: {
-            marginRight: 20,
-            color: 'rgb(135, 147, 252)'
-        },
-        percentFunded: {
-            marginBottom: 10
-        }
-    },
-    recipientHeader: {
-        marginBottom: 5
-    },
-    via: {
-        color: '#666',
-        fontSize: '14px'
-    }
-};
 
 var Project = function (_React$Component) {
     _inherits(Project, _React$Component);
@@ -73881,6 +73817,60 @@ var Project = function (_React$Component) {
             var _this2 = this;
 
             var project = this.project;
+            var styles = {
+                backButtonWrapper: {
+                    marginTop: 10
+                },
+                backButton: {
+                    cursor: 'pointer',
+                    width: 50,
+                    height: 50
+                },
+                projectWrapper: {
+                    marginTop: 30
+                },
+                projectImgWrapper: {
+                    width: 300,
+                    height: 300,
+                    float: 'left',
+                    overflow: 'hidden'
+                },
+                projectImg: {
+                    height: '100%',
+                    transform: 'translateX(-50%)',
+                    position: 'relative',
+                    left: '50%'
+                },
+                projectContent: {
+                    width: 700,
+                    height: 300,
+                    paddingLeft: 20,
+                    boxSizing: 'border-box',
+                    display: 'inline-block'
+                },
+                projectName: {
+                    fontSize: 56,
+                    margin: 0,
+                    fontFamily: 'Wizard, Roboto',
+                    background: '-webkit-linear-gradient(#eb2200, #ede000)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent'
+                },
+                projectDescription: {
+                    lineHeight: '180%',
+                    color: '#666'
+                },
+                divider: {
+                    marginTop: 15
+                }
+            };
+
+            // Only show expenditures list if there are any
+            var expenditures = [];
+            if (project['Expenditures'].length) {
+                expenditures = [_react2.default.createElement(ExpendituresList, { expenditures: project['Expenditures'], key: 'expenditures' })];
+            }
+
             return _react2.default.createElement(
                 'div',
                 null,
@@ -73909,7 +73899,7 @@ var Project = function (_React$Component) {
                     ),
                     _react2.default.createElement(
                         'div',
-                        { style: styles.projectHeader },
+                        { style: styles.projectContent },
                         _react2.default.createElement(
                             'h1',
                             { style: styles.projectName },
@@ -73919,7 +73909,8 @@ var Project = function (_React$Component) {
                             style: styles.projectDescription,
                             dangerouslySetInnerHTML: { __html: (0, _marked2.default)(project.Description) }
                         }),
-                        _react2.default.createElement(ProjectProgress, { project: project })
+                        _react2.default.createElement(ProjectProgress, { project: project }),
+                        expenditures
                     )
                 )
             );
@@ -73954,21 +73945,35 @@ var ProjectProgress = function (_React$Component2) {
             // Goal may not be specified (sometimes it's silly things like "TBD")
             if (_underscore2.default.isNull(stats.goal)) stats.goal = 'Unspecified';else stats.goal = '$' + stats.goal;
 
+            var styles = {
+                goal: {
+                    marginRight: 20,
+                    color: 'rgb(135, 147, 252)'
+                },
+                raised: {
+                    marginRight: 20,
+                    color: 'rgb(135, 147, 252)'
+                },
+                percentFunded: {
+                    marginBottom: 10
+                }
+            };
+
             return _react2.default.createElement(
                 'div',
                 null,
                 _react2.default.createElement(
                     'h4',
-                    { style: styles.progress.percentFunded },
+                    { style: styles.percentFunded },
                     _react2.default.createElement(
                         'span',
-                        { style: styles.progress.goal },
+                        { style: styles.goal },
                         'Goal: ',
                         stats.goal
                     ),
                     _react2.default.createElement(
                         'span',
-                        { style: styles.progress.raised },
+                        { style: styles.raised },
                         'Raised: $',
                         stats.raised
                     ),
@@ -73980,7 +73985,7 @@ var ProjectProgress = function (_React$Component2) {
                         '%'
                     )
                 ),
-                _react2.default.createElement(_LinearProgress2.default, { mode: 'determinate', value: percentFunded, color: color }),
+                _react2.default.createElement(_materialUi.LinearProgress, { mode: 'determinate', value: percentFunded, color: color }),
                 _react2.default.createElement(SendMoneyTo, {
                     recipient: project['Send Money To'],
                     via: project['Send Via']
@@ -74005,6 +74010,16 @@ var SendMoneyTo = function (_React$Component3) {
         key: 'render',
         value: function render() {
             var venmo_id = this.props.via[1].replace('@', '');
+            var styles = {
+                recipientHeader: {
+                    marginBottom: 5
+                },
+                via: {
+                    color: '#666',
+                    fontSize: '14px'
+                }
+            };
+
             return _react2.default.createElement(
                 'div',
                 null,
@@ -74012,11 +74027,7 @@ var SendMoneyTo = function (_React$Component3) {
                     'h3',
                     { style: styles.recipientHeader },
                     'Send donations to ',
-                    _react2.default.createElement(
-                        'span',
-                        { style: styles.recipient },
-                        this.props.recipient
-                    )
+                    this.props.recipient
                 ),
                 _react2.default.createElement(
                     'div',
@@ -74035,9 +74046,93 @@ var SendMoneyTo = function (_React$Component3) {
     return SendMoneyTo;
 }(_react2.default.Component);
 
+var ExpendituresList = function (_React$Component4) {
+    _inherits(ExpendituresList, _React$Component4);
+
+    function ExpendituresList() {
+        _classCallCheck(this, ExpendituresList);
+
+        return _possibleConstructorReturn(this, Object.getPrototypeOf(ExpendituresList).apply(this, arguments));
+    }
+
+    _createClass(ExpendituresList, [{
+        key: 'render',
+        value: function render() {
+            var styles = {
+                container: {
+                    marginTop: 20
+                },
+                subheader: {
+                    paddingLeft: 10,
+                    lineHeight: '35px'
+                },
+                itemWrapper: {
+                    position: 'relative',
+                    paddingLeft: 10,
+                    lineHeight: '160%',
+                    opacity: 0.54
+                },
+                cost: {
+                    position: 'absolute',
+                    top: 0,
+                    right: 10
+                }
+            };
+
+            var itemWrapperStyle = function itemWrapperStyle(index) {
+                return Object.assign({
+                    backgroundColor: index % 2 === 0 ? 'white' : '#eee'
+                }, styles.itemWrapper);
+            };
+
+            return _react2.default.createElement(
+                _materialUi.Paper,
+                { zDepth: 1, style: styles.container },
+                _react2.default.createElement(
+                    _materialUi.Subheader,
+                    { style: styles.subheader },
+                    'Expenditures'
+                ),
+                _react2.default.createElement(_materialUi.Divider, null),
+                this.props.expenditures.map(function (expenditure, index) {
+                    return _react2.default.createElement(
+                        'div',
+                        { style: itemWrapperStyle(index), key: expenditure.item },
+                        _react2.default.createElement(
+                            'span',
+                            null,
+                            expenditure.item
+                        ),
+                        _react2.default.createElement(
+                            'span',
+                            { style: styles.cost },
+                            '$',
+                            ExpendituresList.formatCost(expenditure.cost)
+                        )
+                    );
+                })
+            );
+        }
+    }], [{
+        key: 'formatCost',
+        value: function formatCost(cost) {
+            if (cost % 1 === 0) return cost;
+
+            // It's got some cents.
+            var dollars = Math.floor(cost),
+                cents = cost % 1,
+                fullCents = cents.toFixed(2);
+
+            return '' + dollars + fullCents.slice(fullCents.indexOf('.'));
+        }
+    }]);
+
+    return ExpendituresList;
+}(_react2.default.Component);
+
 exports.default = Project;
 
-},{"../util":604,"jquery":79,"marked":199,"material-ui/LinearProgress":257,"material-ui/svg-icons/navigation/arrow-back":364,"react":583,"underscore":597}],602:[function(require,module,exports){
+},{"../util":604,"jquery":79,"marked":199,"material-ui":334,"material-ui/svg-icons/navigation/arrow-back":364,"react":583,"underscore":597}],602:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

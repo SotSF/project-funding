@@ -3,72 +3,10 @@ import $ from 'jquery';
 import _ from 'underscore';
 import React from 'react';
 import marked from 'marked';
-import LinearProgress from 'material-ui/LinearProgress';
+import {Divider, LinearProgress, Paper, Subheader} from 'material-ui';
 import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import Util from '../util';
 
-
-const styles = {
-    backButtonWrapper: {
-        marginTop: 10
-    },
-    backButton: {
-        cursor: 'pointer',
-        width: 50,
-        height: 50
-    },
-    projectWrapper: {
-        marginTop: 30
-    },
-    projectImgWrapper: {
-        width: 300,
-        height: 300,
-        float: 'left',
-        overflow: 'hidden'
-    },
-    projectImg: {
-        height: '100%',
-        transform: 'translateX(-50%)',
-        position: 'relative',
-        left: '50%'
-    },
-    projectHeader: {
-        width: 700,
-        height: 300,
-        paddingLeft: 20,
-        boxSizing: 'border-box',
-        display: 'inline-block'
-    },
-    projectName: {
-        fontSize: 56,
-        margin: 0
-    },
-    projectDescription: {
-        lineHeight: '180%',
-        color: '#666'
-    },
-
-    progress: {
-        goal: {
-            marginRight: 20,
-            color: 'rgb(135, 147, 252)'
-        },
-        raised: {
-            marginRight: 20,
-            color: 'rgb(135, 147, 252)'
-        },
-        percentFunded: {
-            marginBottom: 10
-        }
-    },
-    recipientHeader: {
-        marginBottom: 5
-    },
-    via: {
-        color: '#666',
-        fontSize: '14px'
-    }
-};
 
 class Project extends React.Component {
     constructor () {
@@ -111,6 +49,62 @@ class Project extends React.Component {
 
     render () {
         let project = this.project;
+        const styles = {
+            backButtonWrapper: {
+                marginTop: 10
+            },
+            backButton: {
+                cursor: 'pointer',
+                width: 50,
+                height: 50
+            },
+            projectWrapper: {
+                marginTop: 30
+            },
+            projectImgWrapper: {
+                width: 300,
+                height: 300,
+                float: 'left',
+                overflow: 'hidden'
+            },
+            projectImg: {
+                height: '100%',
+                transform: 'translateX(-50%)',
+                position: 'relative',
+                left: '50%'
+            },
+            projectContent: {
+                width: 700,
+                height: 300,
+                paddingLeft: 20,
+                boxSizing: 'border-box',
+                display: 'inline-block'
+            },
+            projectName: {
+                fontSize: 56,
+                margin: 0,
+                fontFamily: 'Wizard, Roboto',
+                background: '-webkit-linear-gradient(#eb2200, #ede000)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent'
+            },
+            projectDescription: {
+                lineHeight: '180%',
+                color: '#666'
+            },
+            divider: {
+                marginTop: 15
+            }
+        };
+
+        // Only show expenditures list if there are any
+        let expenditures = [];
+        if (project['Expenditures'].length) {
+            expenditures = [
+                <ExpendituresList expenditures={project['Expenditures']} key="expenditures" />
+            ];
+        }
+
         return (
             <div>
                 <div style={styles.backButtonWrapper}>
@@ -129,13 +123,14 @@ class Project extends React.Component {
                             style={styles.projectImg}
                         />
                     </div>
-                    <div style={styles.projectHeader}>
+                    <div style={styles.projectContent}>
                         <h1 style={styles.projectName}>{project.Project}</h1>
                         <div
                             style={styles.projectDescription}
                             dangerouslySetInnerHTML={{__html: marked(project.Description)}}
                         />
                         <ProjectProgress project={project} />
+                        {expenditures}
                     </div>
                 </div>
             </div>
@@ -159,11 +154,25 @@ class ProjectProgress extends React.Component {
         if (_.isNull(stats.goal)) stats.goal = 'Unspecified';
         else stats.goal = '$' + stats.goal;
 
+        const styles = {
+            goal: {
+                marginRight: 20,
+                color: 'rgb(135, 147, 252)'
+            },
+            raised: {
+                marginRight: 20,
+                color: 'rgb(135, 147, 252)'
+            },
+            percentFunded: {
+                marginBottom: 10
+            }
+        };
+
         return (
             <div>
-                <h4 style={styles.progress.percentFunded}>
-                    <span style={styles.progress.goal}>Goal: {stats.goal}</span>
-                    <span style={styles.progress.raised}>Raised: ${stats.raised}</span>
+                <h4 style={styles.percentFunded}>
+                    <span style={styles.goal}>Goal: {stats.goal}</span>
+                    <span style={styles.raised}>Raised: ${stats.raised}</span>
                     <span style={{ color }}>Funding Progress: {percentFunded.toFixed(2)}%</span>
                 </h4>
                 <LinearProgress mode="determinate" value={percentFunded} color={color} />
@@ -180,11 +189,19 @@ class ProjectProgress extends React.Component {
 class SendMoneyTo extends React.Component {
     render () {
         let venmo_id = this.props.via[1].replace('@', '');
+        const styles = {
+            recipientHeader: {
+                marginBottom: 5
+            },
+            via: {
+                color: '#666',
+                fontSize: '14px'
+            }
+        };
+
         return (
             <div>
-                <h3 style={styles.recipientHeader}>
-                    Send donations to <span style={styles.recipient}>{this.props.recipient}</span>
-                </h3>
+                <h3 style={styles.recipientHeader}>Send donations to {this.props.recipient}</h3>
                 <div style={styles.via}>
                     Venmo:&nbsp;
                     <a href={`https://venmo.com/${encodeURIComponent(venmo_id)}`} target="_blank">
@@ -193,6 +210,62 @@ class SendMoneyTo extends React.Component {
                 </div>
             </div>
         );
+    }
+}
+
+
+class ExpendituresList extends React.Component {
+    render () {
+        const styles = {
+            container: {
+                marginTop: 20
+            },
+            subheader: {
+                paddingLeft: 10,
+                lineHeight: '35px'
+            },
+            itemWrapper: {
+                position: 'relative',
+                paddingLeft: 10,
+                lineHeight: '160%',
+                opacity: 0.54
+            },
+            cost: {
+                position: 'absolute',
+                top: 0,
+                right: 10
+            }
+        };
+
+        let itemWrapperStyle = (index) => {
+            return Object.assign({
+                backgroundColor: index % 2 === 0 ? 'white' : '#eee'
+            }, styles.itemWrapper);
+        };
+
+        return (
+            <Paper zDepth={1} style={styles.container}>
+                <Subheader style={styles.subheader}>Expenditures</Subheader>
+                <Divider />
+                {this.props.expenditures.map((expenditure, index) => (
+                    <div style={itemWrapperStyle(index)} key={expenditure.item}>
+                        <span>{expenditure.item}</span>
+                        <span style={styles.cost}>${ExpendituresList.formatCost(expenditure.cost)}</span>
+                    </div>
+                ))}
+            </Paper>
+        );
+    }
+
+    static formatCost (cost) {
+        if (cost % 1 === 0) return cost;
+
+        // It's got some cents.
+        let dollars   = Math.floor(cost),
+            cents     = cost % 1,
+            fullCents = cents.toFixed(2);
+
+        return `${dollars}${fullCents.slice(fullCents.indexOf('.'))}`;
     }
 }
 
