@@ -73833,7 +73833,8 @@ var Project = function (_React$Component) {
                     width: 300,
                     height: 300,
                     float: 'left',
-                    overflow: 'hidden'
+                    overflow: 'hidden',
+                    borderRadius: 20
                 },
                 projectImg: {
                     height: '100%',
