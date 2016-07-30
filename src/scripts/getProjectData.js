@@ -91,7 +91,7 @@ function extractProjectDataFromCol(col, headers, cells) {
 function getProjectImage (projectName) {
     // If there's a URL provided, go get it
     projectName = projectName.replace('/', '-');
-    var imageRelativePath = 'static/img/' + projectName + '.jpg';
+    var imageRelativePath = 'static/img/projects/' + projectName + '.jpg';
     var imagePath = path.resolve(PROJECT_ROOT, imageRelativePath);
 
     // If there's already a file at that location, we're good
