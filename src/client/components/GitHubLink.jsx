@@ -16,7 +16,7 @@ let GitHubLogo = () => {
 
     return (
         <a style={styles.link} href="https://github.com/SotSF/project-funding" target="_blank">
-            <img style={styles.img} src="/static/img/github-logo.png" />
+            <img style={styles.img} src="static/img/github-logo.png" />
         </a>
     );
 };

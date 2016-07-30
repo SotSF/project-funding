@@ -73714,7 +73714,7 @@ var GitHubLogo = function GitHubLogo() {
     return _react2.default.createElement(
         'a',
         { style: styles.link, href: 'https://github.com/SotSF/project-funding', target: '_blank' },
-        _react2.default.createElement('img', { style: styles.img, src: '/static/img/github-logo.png' })
+        _react2.default.createElement('img', { style: styles.img, src: 'static/img/github-logo.png' })
     );
 };
 
