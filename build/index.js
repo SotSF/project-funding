@@ -74061,7 +74061,7 @@ var ExpendituresList = function (_React$Component4) {
         value: function render() {
             var styles = {
                 container: {
-                    marginTop: 20
+                    margin: '20px 0'
                 },
                 subheader: {
                     paddingLeft: 10,

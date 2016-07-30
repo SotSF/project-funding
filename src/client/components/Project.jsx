@@ -219,7 +219,7 @@ class ExpendituresList extends React.Component {
     render () {
         const styles = {
             container: {
-                marginTop: 20
+                margin: '20px 0'
             },
             subheader: {
                 paddingLeft: 10,
