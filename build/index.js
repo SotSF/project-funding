@@ -73685,7 +73685,42 @@ var Explanation = function (_React$Component) {
 
 exports.default = App;
 
-},{"./ProjectGrid.jsx":602,"material-ui/styles/transitions":358,"react":583,"underscore":597}],600:[function(require,module,exports){
+},{"./ProjectGrid.jsx":603,"material-ui/styles/transitions":358,"react":583,"underscore":597}],600:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var GitHubLogo = function GitHubLogo() {
+    var styles = {
+        link: {
+            position: 'absolute',
+            top: 10,
+            right: 10
+        },
+        img: {
+            width: 30,
+            height: 30
+        }
+    };
+
+    return _react2.default.createElement(
+        'a',
+        { style: styles.link, href: 'https://github.com/SotSF/project-funding', target: '_blank' },
+        _react2.default.createElement('img', { style: styles.img, src: '/static/img/github-logo.png' })
+    );
+};
+
+exports.default = GitHubLogo;
+
+},{"react":583}],601:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -73719,7 +73754,7 @@ var SecretFireLogoIcon = function SecretFireLogoIcon(props) {
 
 exports.default = SecretFireLogoIcon;
 
-},{"material-ui":334,"react":583}],601:[function(require,module,exports){
+},{"material-ui":334,"react":583}],602:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -74134,7 +74169,7 @@ var ExpendituresList = function (_React$Component4) {
 
 exports.default = Project;
 
-},{"../util":604,"jquery":79,"marked":199,"material-ui":334,"material-ui/svg-icons/navigation/arrow-back":364,"react":583,"underscore":597}],602:[function(require,module,exports){
+},{"../util":605,"jquery":79,"marked":199,"material-ui":334,"material-ui/svg-icons/navigation/arrow-back":364,"react":583,"underscore":597}],603:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -74341,7 +74376,7 @@ var TileIcon = function (_React$Component3) {
 
 exports.default = ProjectGrid;
 
-},{"../util":604,"./LogoIcon.jsx":600,"material-ui":334,"material-ui/styles/transitions":358,"react":583}],603:[function(require,module,exports){
+},{"../util":605,"./LogoIcon.jsx":601,"material-ui":334,"material-ui/styles/transitions":358,"react":583}],604:[function(require,module,exports){
 'use strict';
 
 var _jquery = require('jquery');
@@ -74369,6 +74404,10 @@ var _reactTapEventPlugin2 = _interopRequireDefault(_reactTapEventPlugin);
 var _MuiThemeProvider = require('material-ui/styles/MuiThemeProvider');
 
 var _MuiThemeProvider2 = _interopRequireDefault(_MuiThemeProvider);
+
+var _GitHubLink = require('./components/GitHubLink.jsx');
+
+var _GitHubLink2 = _interopRequireDefault(_GitHubLink);
 
 var _App = require('./components/App.jsx');
 
@@ -74398,19 +74437,24 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
             null,
             _react2.default.createElement(
                 'div',
-                { style: appContainerStyle },
+                null,
+                _react2.default.createElement(_GitHubLink2.default, null),
                 _react2.default.createElement(
-                    _reactRouter.Router,
-                    { history: _reactRouter.hashHistory },
-                    _react2.default.createElement(_reactRouter.Route, { path: '/', component: _App2.default }),
-                    _react2.default.createElement(_reactRouter.Route, { path: '/:projectName', component: _Project2.default })
+                    'div',
+                    { id: 'content-container', style: appContainerStyle },
+                    _react2.default.createElement(
+                        _reactRouter.Router,
+                        { history: _reactRouter.hashHistory },
+                        _react2.default.createElement(_reactRouter.Route, { path: '/', component: _App2.default }),
+                        _react2.default.createElement(_reactRouter.Route, { path: '/:projectName', component: _Project2.default })
+                    )
                 )
             )
         ), document.getElementById('app-container'));
     });
 });
 
-},{"./components/App.jsx":599,"./components/Project.jsx":601,"jquery":79,"material-ui/styles/MuiThemeProvider":353,"react":583,"react-dom":393,"react-router":424,"react-tap-event-plugin":438,"underscore":597}],604:[function(require,module,exports){
+},{"./components/App.jsx":599,"./components/GitHubLink.jsx":600,"./components/Project.jsx":602,"jquery":79,"material-ui/styles/MuiThemeProvider":353,"react":583,"react-dom":393,"react-router":424,"react-tap-event-plugin":438,"underscore":597}],605:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -74477,5 +74521,5 @@ var Util = {
 
 exports.default = Util;
 
-},{"underscore":597}]},{},[603])
+},{"underscore":597}]},{},[604])
 //# sourceMappingURL=index.js.map

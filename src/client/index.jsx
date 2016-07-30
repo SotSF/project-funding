@@ -7,6 +7,7 @@ import { Router, Route, hashHistory } from 'react-router';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
+import GitHubLink from './components/GitHubLink.jsx';
 import App from './components/App.jsx'
 import Project from './components/Project.jsx';
 
@@ -28,11 +29,14 @@ $(function () {
 
         ReactDom.render(
             <MuiThemeProvider>
-                <div style={appContainerStyle}>
-                    <Router history={hashHistory}>
-                        <Route path="/" component={App}/>
-                        <Route path="/:projectName" component={Project}/>
-                    </Router>
+                <div>
+                    <GitHubLink />
+                    <div id="content-container" style={appContainerStyle}>
+                        <Router history={hashHistory}>
+                            <Route path="/" component={App}/>
+                            <Route path="/:projectName" component={Project}/>
+                        </Router>
+                    </div>
                 </div>
             </MuiThemeProvider>,
             document.getElementById('app-container')
