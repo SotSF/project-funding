@@ -13,11 +13,9 @@ class GitHubLogo extends React.Component {
     render () {
         let styles = {
             link: {
-                position: 'absolute',
-                top: 10,
-                right: 10,
                 opacity: this.state.hover ? 0.54 : 0.38,
-                transition: transitions.easeOut()
+                transition: transitions.easeOut(),
+                float: 'right'
             },
             img: {
                 width: 30,

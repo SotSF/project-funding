@@ -73553,8 +73553,6 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 var _underscore = require('underscore');
 
 var _underscore2 = _interopRequireDefault(_underscore);
@@ -73563,13 +73561,58 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _transitions = require('material-ui/styles/transitions');
-
-var _transitions2 = _interopRequireDefault(_transitions);
-
 var _ProjectGrid = require('./ProjectGrid.jsx');
 
 var _ProjectGrid2 = _interopRequireDefault(_ProjectGrid);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var shuffledProjects = _underscore2.default.once(function () {
+    return _underscore2.default.shuffle(window.projects);
+});
+var App = function App() {
+    var headerStyle = {
+        fontSize: 60,
+        textAlign: 'center',
+        margin: '10px 0 0',
+        fontFamily: 'Wizard, Roboto',
+        background: '-webkit-linear-gradient(#eb2200, #ede000)',
+        WebkitBackgroundClip: 'text',
+        WebkitTextFillColor: 'transparent'
+    };
+
+    return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+            'h1',
+            { style: headerStyle },
+            'Eksperimental Magiks'
+        ),
+        _react2.default.createElement(_ProjectGrid2.default, { projects: shuffledProjects() })
+    );
+};
+
+exports.default = App;
+
+},{"./ProjectGrid.jsx":604,"react":583,"underscore":597}],600:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _materialUi = require('material-ui');
+
+var _transitions = require('material-ui/styles/transitions');
+
+var _transitions2 = _interopRequireDefault(_transitions);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -73578,42 +73621,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var styles = {
-    appHeader: {
-        fontSize: 60,
-        textAlign: 'center',
-        margin: '10px 0 0',
-        fontFamily: 'Wizard, Roboto',
-        background: '-webkit-linear-gradient(#eb2200, #ede000)',
-        WebkitBackgroundClip: 'text',
-        WebkitTextFillColor: 'transparent'
-    },
-    explanation: {
-        fontSize: '12px',
-        textAlign: 'center',
-        marginBottom: 5,
-        overflow: 'hidden',
-        cursor: 'default'
-    }
-};
-
-var shuffledProjects = _underscore2.default.once(function () {
-    return _underscore2.default.shuffle(window.projects);
-});
-var App = function App() {
-    return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-            'h1',
-            { style: styles.appHeader },
-            'Eksperimental Magiks'
-        ),
-        _react2.default.createElement(Explanation, null),
-        _react2.default.createElement(_ProjectGrid2.default, { projects: shuffledProjects() })
-    );
-};
 
 var Explanation = function (_React$Component) {
     _inherits(Explanation, _React$Component);
@@ -73624,56 +73631,90 @@ var Explanation = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Explanation).call(this));
 
         _this.state = {
+            open: false,
             hover: false
         };
         return _this;
     }
 
     _createClass(Explanation, [{
+        key: 'handleClose',
+        value: function handleClose() {
+            this.setState({ open: false });
+        }
+    }, {
         key: 'render',
         value: function render() {
             var _this2 = this;
 
-            var explanationStyle = {
-                maxHeight: this.state.hover ? 200 : 0,
-                transition: _transitions2.default.easeOut('750ms'),
-                overflow: 'hidden',
-                textAlign: 'justify',
-                lineHeight: '150%'
+            var styles = {
+                label: {
+                    fontSize: 12,
+                    float: 'right',
+                    textAlign: 'right',
+                    marginBottom: 5,
+                    overflow: 'hidden',
+                    cursor: 'pointer',
+                    opacity: this.state.hover ? 1 : 0.54,
+                    transition: _transitions2.default.easeOut()
+                },
+                content: {
+                    textAlign: 'justify',
+                    lineHeight: '150%'
+                }
             };
+
+            var dialogActions = [_react2.default.createElement(_materialUi.FlatButton, {
+                label: 'Cool!',
+                primary: true,
+                onTouchTap: function onTouchTap() {
+                    return _this2.handleClose();
+                }
+            })];
 
             return _react2.default.createElement(
                 'div',
-                {
-                    style: styles.explanation,
-                    onMouseLeave: function onMouseLeave() {
-                        return _this2.setState({ hover: false });
-                    }
-                },
+                null,
                 _react2.default.createElement(
-                    'strong',
+                    'div',
                     {
+                        style: styles.label,
+                        onTouchTap: function onTouchTap() {
+                            return _this2.setState({ open: true });
+                        },
                         onMouseOver: function onMouseOver() {
                             return _this2.setState({ hover: true });
                         },
-                        onClick: function onClick() {
-                            return _this2.setState({ hover: true });
+                        onMouseLeave: function onMouseLeave() {
+                            return _this2.setState({ hover: false });
                         }
                     },
                     'What is this?'
                 ),
                 _react2.default.createElement(
-                    'div',
-                    { style: explanationStyle },
+                    _materialUi.Dialog,
+                    {
+                        title: 'Camp Project Funding!',
+                        actions: dialogActions,
+                        modal: false,
+                        open: this.state.open,
+                        onRequestClose: function onRequestClose() {
+                            return _this2.handleClose();
+                        }
+                    },
                     _react2.default.createElement(
-                        'p',
-                        null,
-                        'The Servants of the Secret Fire are an active bunch of wizards! This is a collection of the projects currently being undertaken by camp members to bring to the Playa in 2016. Check out the projects below to get a sense of what camp will be like at 9:15 and B!'
-                    ),
-                    _react2.default.createElement(
-                        'p',
-                        null,
-                        'Of course, creating is not always an easy or cheap enterprise. As prolific as the Servants aspire to be, the spectre of funding always manages to intrude. That\'s why, as a part of camp membership, SotSF requires its wizards to monetarily contribute to the development of each other\'s ideas. We recognize the necessity of diversity, and wish to strongly encourage our fellow campmates to follow the whimsical paths of their imagination, towards whatever end inspires them. Funding from outside the camp is happily accepted, but never expected.'
+                        'div',
+                        { style: styles.content },
+                        _react2.default.createElement(
+                            'p',
+                            null,
+                            'The Servants of the Secret Fire are an active bunch of wizards! This is a collection of the projects currently being undertaken by camp members to bring to the Playa in 2016. Check out the projects below to get a sense of what camp will be like at 9:15 and B!'
+                        ),
+                        _react2.default.createElement(
+                            'p',
+                            null,
+                            'Of course, creating is not always an easy or cheap enterprise. As prolific as the Servants aspire to be, the spectre of funding always manages to intrude. That\'s why, as a part of camp membership, SotSF requires its wizards to monetarily contribute to the development of each other\'s ideas. We recognize the necessity of diversity, and wish to strongly encourage our fellow campmates to follow the whimsical paths of their imagination, towards whatever end inspires them. Funding from outside the camp is happily accepted, but never expected.'
+                        )
                     )
                 )
             );
@@ -73683,9 +73724,9 @@ var Explanation = function (_React$Component) {
     return Explanation;
 }(_react2.default.Component);
 
-exports.default = App;
+exports.default = Explanation;
 
-},{"./ProjectGrid.jsx":603,"material-ui/styles/transitions":358,"react":583,"underscore":597}],600:[function(require,module,exports){
+},{"material-ui":334,"material-ui/styles/transitions":358,"react":583}],601:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -73731,11 +73772,9 @@ var GitHubLogo = function (_React$Component) {
 
             var styles = {
                 link: {
-                    position: 'absolute',
-                    top: 10,
-                    right: 10,
                     opacity: this.state.hover ? 0.54 : 0.38,
-                    transition: _transitions2.default.easeOut()
+                    transition: _transitions2.default.easeOut(),
+                    float: 'right'
                 },
                 img: {
                     width: 30,
@@ -73768,7 +73807,7 @@ var GitHubLogo = function (_React$Component) {
 
 exports.default = GitHubLogo;
 
-},{"material-ui/styles/transitions":358,"react":583}],601:[function(require,module,exports){
+},{"material-ui/styles/transitions":358,"react":583}],602:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -73802,7 +73841,7 @@ var SecretFireLogoIcon = function SecretFireLogoIcon(props) {
 
 exports.default = SecretFireLogoIcon;
 
-},{"material-ui":334,"react":583}],602:[function(require,module,exports){
+},{"material-ui":334,"react":583}],603:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -74217,7 +74256,7 @@ var ExpendituresList = function (_React$Component4) {
 
 exports.default = Project;
 
-},{"../util":605,"jquery":79,"marked":199,"material-ui":334,"material-ui/svg-icons/navigation/arrow-back":364,"react":583,"underscore":597}],603:[function(require,module,exports){
+},{"../util":607,"jquery":79,"marked":199,"material-ui":334,"material-ui/svg-icons/navigation/arrow-back":364,"react":583,"underscore":597}],604:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -74424,7 +74463,70 @@ var TileIcon = function (_React$Component3) {
 
 exports.default = ProjectGrid;
 
-},{"../util":605,"./LogoIcon.jsx":601,"material-ui":334,"material-ui/styles/transitions":358,"react":583}],604:[function(require,module,exports){
+},{"../util":607,"./LogoIcon.jsx":602,"material-ui":334,"material-ui/styles/transitions":358,"react":583}],605:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _GitHubLink = require('./GitHubLink.jsx');
+
+var _GitHubLink2 = _interopRequireDefault(_GitHubLink);
+
+var _Explanation = require('./Explanation.jsx');
+
+var _Explanation2 = _interopRequireDefault(_Explanation);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var RightBar = function (_React$Component) {
+    _inherits(RightBar, _React$Component);
+
+    function RightBar() {
+        _classCallCheck(this, RightBar);
+
+        return _possibleConstructorReturn(this, Object.getPrototypeOf(RightBar).apply(this, arguments));
+    }
+
+    _createClass(RightBar, [{
+        key: 'render',
+        value: function render() {
+            var style = {
+                position: 'absolute',
+                top: 0,
+                right: 0,
+                padding: 10,
+                maxWidth: 75
+            };
+
+            return _react2.default.createElement(
+                'div',
+                { style: style },
+                _react2.default.createElement(_GitHubLink2.default, null),
+                _react2.default.createElement(_Explanation2.default, null)
+            );
+        }
+    }]);
+
+    return RightBar;
+}(_react2.default.Component);
+
+exports.default = RightBar;
+
+},{"./Explanation.jsx":600,"./GitHubLink.jsx":601,"react":583}],606:[function(require,module,exports){
 'use strict';
 
 var _jquery = require('jquery');
@@ -74453,9 +74555,9 @@ var _MuiThemeProvider = require('material-ui/styles/MuiThemeProvider');
 
 var _MuiThemeProvider2 = _interopRequireDefault(_MuiThemeProvider);
 
-var _GitHubLink = require('./components/GitHubLink.jsx');
+var _RightBar = require('./components/RightBar.jsx');
 
-var _GitHubLink2 = _interopRequireDefault(_GitHubLink);
+var _RightBar2 = _interopRequireDefault(_RightBar);
 
 var _App = require('./components/App.jsx');
 
@@ -74486,7 +74588,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
             _react2.default.createElement(
                 'div',
                 null,
-                _react2.default.createElement(_GitHubLink2.default, null),
+                _react2.default.createElement(_RightBar2.default, null),
                 _react2.default.createElement(
                     'div',
                     { id: 'content-container', style: appContainerStyle },
@@ -74502,7 +74604,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
     });
 });
 
-},{"./components/App.jsx":599,"./components/GitHubLink.jsx":600,"./components/Project.jsx":602,"jquery":79,"material-ui/styles/MuiThemeProvider":353,"react":583,"react-dom":393,"react-router":424,"react-tap-event-plugin":438,"underscore":597}],605:[function(require,module,exports){
+},{"./components/App.jsx":599,"./components/Project.jsx":603,"./components/RightBar.jsx":605,"jquery":79,"material-ui/styles/MuiThemeProvider":353,"react":583,"react-dom":393,"react-router":424,"react-tap-event-plugin":438,"underscore":597}],607:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -74569,5 +74671,5 @@ var Util = {
 
 exports.default = Util;
 
-},{"underscore":597}]},{},[604])
+},{"underscore":597}]},{},[606])
 //# sourceMappingURL=index.js.map
