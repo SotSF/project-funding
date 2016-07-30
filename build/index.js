@@ -74573,7 +74573,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 (0, _jquery2.default)(function () {
     // Query for the latest project data
-    _jquery2.default.get('projectData.json').done(function (projectList) {
+    _jquery2.default.get('data/projectData.json').done(function (projectList) {
         // Shuffle the JSON
         window.projects = _underscore2.default.object(_underscore2.default.pluck(projectList, 'Project'), _underscore2.default.omit(projectList, 'Project'));
 

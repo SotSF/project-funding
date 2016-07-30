@@ -50,7 +50,7 @@ function getProjects(cells) {
         return extractProjectDataFromCol(projectCol, headers, cells);
     });
 
-    var dataPath = path.resolve(PROJECT_ROOT, 'projectData.json');
+    var dataPath = path.resolve(PROJECT_ROOT, 'data/projectData.json');
     jsonfile.writeFileSync(dataPath, projectData, { spaces: 4 });
 }
 
