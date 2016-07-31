@@ -7,9 +7,7 @@ import { Router, Route, hashHistory } from 'react-router';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import RightBar from './components/RightBar.jsx';
-import App from './components/App.jsx'
-import Project from './components/Project.jsx';
+import { App, Project, RightBar} from './components';
 
 injectTapEventPlugin();
 
@@ -34,7 +32,7 @@ $(function () {
                     <div id="content-container" style={appContainerStyle}>
                         <Router history={hashHistory}>
                             <Route path="/" component={App}/>
-                            <Route path="/:projectName" component={Project}/>
+                            <Route path="/project/:projectName" component={Project}/>
                         </Router>
                     </div>
                 </div>

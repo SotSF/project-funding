@@ -78,7 +78,7 @@ class ProjectTile extends React.Component {
     }
 
     clicked = () => {
-        window.location = `#/${encodeURIComponent(this.props.project.Project)}`;
+        window.location = `#/project/${encodeURIComponent(this.props.project.Project)}`;
     }
 }
 
