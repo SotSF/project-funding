@@ -4,6 +4,7 @@ import React from 'react';
 import marked from 'marked';
 import {Divider, LinearProgress, Paper, Subheader} from 'material-ui';
 import ArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
+import Aniron from './Aniron.jsx';
 import Util from '../util';
 
 
@@ -80,14 +81,6 @@ class Project extends React.Component {
                 boxSizing: 'border-box',
                 display: 'inline-block'
             },
-            projectName: {
-                fontSize: 42,
-                margin: 0,
-                fontFamily: 'Wizard, Roboto',
-                background: '-webkit-linear-gradient(#eb2200, #ede000)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent'
-            },
             projectDescription: {
                 lineHeight: '180%',
                 color: '#666'
@@ -124,7 +117,7 @@ class Project extends React.Component {
                         />
                     </div>
                     <div style={styles.projectContent}>
-                        <h1 style={styles.projectName}>{project.Project}</h1>
+                        <Aniron>{project.Project}</Aniron>
                         <div
                             className="project-description"
                             style={styles.projectDescription}

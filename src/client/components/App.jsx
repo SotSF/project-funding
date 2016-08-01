@@ -2,6 +2,7 @@
 import _ from 'underscore';
 import React from 'react';
 import ProjectGrid from './ProjectGrid.jsx';
+import Aniron from './Aniron.jsx';
 
 
 
@@ -10,16 +11,12 @@ let App = () => {
     const headerStyle = {
         fontSize: 60,
         textAlign: 'center',
-        margin: '10px 0 0',
-        fontFamily: 'Wizard, Roboto',
-        background: '-webkit-linear-gradient(#eb2200, #ede000)',
-        WebkitBackgroundClip: 'text',
-        WebkitTextFillColor: 'transparent'
+        margin: '10px 0 0'
     };
 
     return (
         <div>
-            <h1 style={headerStyle}>Eksperimental Magiks</h1>
+            <Aniron style={headerStyle}>Eksperimental Magiks</Aniron>
             <ProjectGrid projects={shuffledProjects()} />
         </div>
     );
