@@ -1,6 +1,6 @@
 
 export { default as App         } from './App.jsx';
-export { default as DonorList   } from './DonorList.jsx';
+export { default as DonorsPage  } from './DonorsPage.jsx';
 export { default as Explanation } from './Explanation.jsx';
 export { default as GitHubLink  } from './GitHubLink.jsx';
 export { default as LogoIcon    } from './LogoIcon.jsx';

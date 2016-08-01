@@ -7,7 +7,7 @@ import { Router, Route, hashHistory } from 'react-router';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
-import { App, Project, RightBar} from './components';
+import { App, DonorsPage, Project, RightBar} from './components';
 
 injectTapEventPlugin();
 
@@ -39,6 +39,7 @@ xhr({
                     <div id="content-container" style={appContainerStyle}>
                         <Router history={hashHistory}>
                             <Route path="/" component={App}/>
+                            <Route path="/donors" component={DonorsPage} />
                             <Route path="/project/:projectName" component={Project}/>
                         </Router>
                     </div>
