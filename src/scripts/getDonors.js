@@ -32,21 +32,31 @@ async.series([
 
 function getDonors (cells) {
     var donorCombos = getDonorCombos(cells);
-    var donationsByName = {};
+    var donationAggregates = [];
 
     _.each(donorCombos, function (combo) {
-        var donationVal = parseDonationVal(combo);
-        if (donationsByName[combo.donor.name]) {
-            if (_.isNull(donationVal)) return;
-            donationsByName[combo.donor.name] += donationVal;
+        var donationVal = parseDonationVal(combo),
+            donationAggregate = _.findWhere(donationAggregates, { name: combo.donor.name });
+        if (_.isNull(donationVal)) return;
+
+        if (donationAggregate) {
+            donationAggregate.donations += donationVal;
         } else {
-            donationsByName[combo.donor.name]  = donationVal;
+            donationAggregates.push({
+                name      : combo.donor.name,
+                donations : donationVal
+            });
         }
     });
 
-    var dataPath = path.resolve(__dirname, '../../donorData.json');
-    console.log(dataPath);
-    jsonfile.writeFileSync(dataPath, donationsByName, { spaces: 4 });
+    donationAggregates.sort(function (donor1, donor2) {
+        if (donor1.donations > donor2.donations) return -1;
+        if (donor1.donations < donor2.donations) return 1;
+        return 0;
+    });
+
+    var dataPath = path.resolve(__dirname, '../../data/donorData.json');
+    jsonfile.writeFileSync(dataPath, donationAggregates, { spaces: 4 });
 }
 
 function getDonorCombos (cells) {
