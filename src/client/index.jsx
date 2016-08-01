@@ -1,6 +1,6 @@
 
-import $ from 'jquery';
 import _ from 'underscore';
+import xhr from 'tiny-xhr';
 import React from 'react';
 import ReactDom from 'react-dom';
 import { Router, Route, hashHistory } from 'react-router';
@@ -11,9 +11,16 @@ import { App, Project, RightBar} from './components';
 
 injectTapEventPlugin();
 
-$(function () {
-    // Query for the latest project data
-    $.get('data/projectData.json').done(function (projectList) {
+xhr({
+    url: 'data/projectData.json',
+    method: 'GET',
+    type: 'json',
+    data: 'data',
+    headers: {
+        'Content-Type': 'application/json'
+    }
+})
+    .then((projectList) => {
         // Shuffle the JSON
         window.projects = _.object(
             _.pluck(projectList, 'Project'),
@@ -40,4 +47,3 @@ $(function () {
             document.getElementById('app-container')
         );
     });
-});

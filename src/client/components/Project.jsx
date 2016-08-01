@@ -1,5 +1,4 @@
 
-import $ from 'jquery';
 import _ from 'underscore';
 import React from 'react';
 import marked from 'marked';
@@ -16,7 +15,7 @@ class Project extends React.Component {
 
     componentDidMount () {
         this.ensureImageCover();
-        $('html,body').scrollTop(0);
+        window.scrollTo(0, 0);
     }
 
     ensureImageCover() {
