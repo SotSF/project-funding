@@ -65955,24 +65955,20 @@ var Util = {
 };
 
 var redToGreen = function redToGreen(value, maximum) {
-    // Basic interpolation helper
-    function transition(value, start_point, end_point) {
-        var proportion = Math.round(start_point + (end_point - start_point) * value / maximum);
-        if (proportion > maximum) return maximum;
-        return proportion;
-    }
+    if (value > maximum) value = maximum;
 
-    function transitionRGB(value, rgb1, rgb2) {
-        return {
-            r: transition(value, rgb1.r, rgb2.r),
-            g: transition(value, rgb1.g, rgb2.g),
-            b: transition(value, rgb1.b, rgb2.b)
-        };
+    // Basic interpolation helper
+    function transition(start_point, end_point) {
+        return Math.round(start_point + (end_point - start_point) * value / maximum);
     }
 
     var green = { r: 20, g: 140, b: 20 },
         red = { r: 255, g: 80, b: 80 },
-        rgb = transitionRGB(value, red, green);
+        rgb = {
+        r: transition(red.r, green.r),
+        g: transition(red.g, green.g),
+        b: transition(red.b, green.b)
+    };
 
     return 'rgb(' + rgb.r + ', ' + rgb.g + ', ' + rgb.b + ')';
 };
