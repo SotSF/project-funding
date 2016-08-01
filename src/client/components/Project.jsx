@@ -109,13 +109,13 @@ class Project extends React.Component {
                 </div>
 
                 <div style={styles.projectWrapper}>
-                    <div style={styles.projectImgWrapper}>
+                    <Paper style={styles.projectImgWrapper} zDepth={5}>
                         <img
                             ref={(c) => this.img = c}
                             src={project['Image URL']}
                             style={styles.projectImg}
                         />
-                    </div>
+                    </Paper>
                     <div style={styles.projectContent}>
                         <Aniron>{project.Project}</Aniron>
                         <div
