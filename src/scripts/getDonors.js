@@ -68,6 +68,9 @@ function getDonorCombos (cells) {
 
         var donationRegex = /\$\d+/;
         if (donationRegex.test(cell._value) && !donationRegex.test(neighbor._value)) {
+            // Don't include the "CLOSED" cells
+            if (neighbor._value === 'CLOSED') return;
+
             donorCombos.push({
                 value: { val  : cell._value,     row: cell.row,     col: cell.col },
                 donor: { name : neighbor._value, row: neighbor.row, col: neighbor.col }
