@@ -65937,7 +65937,7 @@ var Util = {
             if (value === void 0) {
                 return null;
             } else if (value[0] === '$') {
-                return parseFloat(value.slice(1));
+                return parseFloat(value.slice(1).replace(',', ''));
             } else if (_underscore2.default.isNaN(parseFloat(value))) {
                 return null;
             } else {
