@@ -11,7 +11,7 @@ var doc = new GoogleSpreadsheet('13xzXDcuJtIOh7PwYa2rF-SrdVTNh8942tOlokb64NDM');
 async.series([
     function setAuth(step) {
         // see notes below for authentication instructions!
-        var creds = require('../../google-generated-creds.json');
+        var creds = require('../../config/google-generated-creds.json');
         doc.useServiceAccountAuth(creds, step);
     },
     function getInfoAndWorksheets(step) {

@@ -1,4 +1,4 @@
 .idea
-google-generated-creds.json
 node_modules
+config/
 data/
