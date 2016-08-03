@@ -64698,6 +64698,10 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _underscore = require('underscore');
+
+var _underscore2 = _interopRequireDefault(_underscore);
+
 var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
@@ -64728,6 +64732,7 @@ var DonorsPage = function (_React$Component) {
 
         _this.state = {
             data: null,
+            dues: null,
             errorCode: null
         };
         return _this;
@@ -64740,6 +64745,12 @@ var DonorsPage = function (_React$Component) {
 
             (0, _util.getOnce)('data/donorData.json').then(function (data) {
                 return _this2.setState({ data: data });
+            }).catch(function (xhr) {
+                return _this2.setState({ errorCode: xhr.status });
+            });
+
+            (0, _util.getOnce)('config/kickstarterDues.json').then(function (dues) {
+                return _this2.setState({ dues: dues });
             }).catch(function (xhr) {
                 return _this2.setState({ errorCode: xhr.status });
             });
@@ -64798,8 +64809,12 @@ var DonorsList = function DonorsList(props) {
     return _react2.default.createElement(
         'div',
         { style: style },
-        props.donors.map(function (donor) {
-            return _react2.default.createElement(Donor, _extends({}, donor, { key: donor.name }));
+        props.dues && _underscore2.default.map(props.dues.campMembers, function (memberDues) {
+            console.log(_underscore2.default.findWhere(props.donors, { name: memberDues.name }));
+            return _react2.default.createElement(Donor, _extends({}, memberDues, {
+                donor: _underscore2.default.findWhere(props.donors, { name: memberDues.name }),
+                key: memberDues.name
+            }));
         })
     );
 };
@@ -64813,8 +64828,14 @@ var Donor = function Donor(props) {
 
     // Cap the donation amount at 50 for the purposes of the progress bar (show actual donation
     // amount with the name)
-    var requiredDonation = 50,
-        donation = props.donations > requiredDonation ? requiredDonation : props.donations;
+    var requiredDonation = props.owes,
+        donation = void 0;
+
+    if (props.donor) {
+        donation = props.donor.donations > requiredDonation ? requiredDonation : props.donor.donations;
+    } else {
+        donation = 0;
+    }
 
     return _react2.default.createElement(
         'div',
@@ -64824,7 +64845,7 @@ var Donor = function Donor(props) {
             null,
             props.name,
             ' ($',
-            props.donations,
+            props.donor ? props.donor.donations : 0,
             ')'
         ),
         _react2.default.createElement(_materialUi.LinearProgress, {
@@ -64837,7 +64858,7 @@ var Donor = function Donor(props) {
 
 exports.default = DonorsPage;
 
-},{"../util":613,"./Aniron.jsx":602,"material-ui":333,"react":585}],605:[function(require,module,exports){
+},{"../util":613,"./Aniron.jsx":602,"material-ui":333,"react":585,"underscore":600}],605:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

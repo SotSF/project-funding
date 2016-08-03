@@ -1,4 +1,5 @@
 
+import _ from 'underscore';
 import React from 'react';
 import { LinearProgress } from 'material-ui';
 import Aniron from './Aniron.jsx';
@@ -10,6 +11,7 @@ class DonorsPage extends React.Component {
         super(props);
         this.state = {
             data      : null,
+            dues      : null,
             errorCode : null
         };
     }
@@ -17,6 +19,10 @@ class DonorsPage extends React.Component {
     componentDidMount () {
         getOnce('data/donorData.json')
             .then((data) => this.setState({ data }))
+            .catch((xhr) => this.setState({ errorCode: xhr.status }));
+
+        getOnce('config/kickstarterDues.json')
+            .then((dues) => this.setState({ dues }))
             .catch((xhr) => this.setState({ errorCode: xhr.status }));
     }
 
@@ -51,7 +57,6 @@ class DonorsPage extends React.Component {
             errorCode
         ];
 
-
         return <div>
             <Aniron style={styles.header}>Donations Tracker</Aniron>
             {components}
@@ -67,9 +72,16 @@ let DonorsList = (props) => {
 
     return (
         <div style={style}>
-            {props.donors.map((donor) => (
-                <Donor {...donor} key={donor.name} />
-            ))}
+            {props.dues && _.map(props.dues.campMembers, (memberDues) => {
+                console.log(_.findWhere(props.donors, { name: memberDues.name }));
+                return (
+                    <Donor
+                        {...memberDues}
+                        donor={_.findWhere(props.donors, { name: memberDues.name })}
+                        key={memberDues.name}
+                    />
+                )
+            })}
         </div>
     );
 };
@@ -84,12 +96,20 @@ let Donor = (props) => {
 
     // Cap the donation amount at 50 for the purposes of the progress bar (show actual donation
     // amount with the name)
-    let requiredDonation = 50,
-        donation         = props.donations > requiredDonation ? requiredDonation : props.donations;
+    let requiredDonation = props.owes,
+        donation;
+
+    if (props.donor) {
+        donation = props.donor.donations > requiredDonation
+            ? requiredDonation
+            : props.donor.donations;
+    } else {
+        donation = 0;
+    }
 
     return (
         <div style={styles.wrapper}>
-            <div>{props.name} (${props.donations})</div>
+            <div>{props.name} (${props.donor ? props.donor.donations : 0 })</div>
             <LinearProgress
                 mode="determinate"
                 value={donation / requiredDonation * 100}
