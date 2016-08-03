@@ -64758,7 +64758,12 @@ var DonorsPage = function (_React$Component) {
                 }
             };
 
-            var donorsList = this.state.data && _react2.default.createElement(DonorsList, { donors: this.state.data, key: 'donors' });
+            var donorsList = this.state.data && _react2.default.createElement(DonorsList, {
+                donors: this.state.data,
+                dues: this.state.dues,
+                key: 'donors'
+            });
+
             var errorCode = this.state.errorCode && _react2.default.createElement(
                 'div',
                 { style: styles.error, key: 'error' },
@@ -64797,7 +64802,9 @@ var DonorsList = function DonorsList(props) {
 
 var Donor = function Donor(props) {
     var styles = {
-        name: {}
+        wrapper: {
+            marginTop: 10
+        }
     };
 
     // Cap the donation amount at 50 for the purposes of the progress bar (show actual donation
@@ -64807,11 +64814,14 @@ var Donor = function Donor(props) {
 
     return _react2.default.createElement(
         'div',
-        null,
+        { style: styles.wrapper },
         _react2.default.createElement(
             'div',
             null,
-            props.name
+            props.name,
+            ' ($',
+            props.donations,
+            ')'
         ),
         _react2.default.createElement(_materialUi.LinearProgress, {
             mode: 'determinate',
@@ -65030,8 +65040,6 @@ var GitHubLogo = function (_React$Component) {
 
     return GitHubLogo;
 }(_react2.default.Component);
-
-;
 
 exports.default = GitHubLogo;
 
