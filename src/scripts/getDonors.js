@@ -50,8 +50,8 @@ function getDonors (cells) {
     });
 
     donationAggregates.sort(function (donor1, donor2) {
-        if (donor1.donations > donor2.donations) return -1;
-        if (donor1.donations < donor2.donations) return 1;
+        if (donor1.name > donor2.name) return 1;
+        if (donor1.name < donor2.name) return -1;
         return 0;
     });
 
