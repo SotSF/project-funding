@@ -60,13 +60,19 @@ class DonorsPage extends React.Component {
 }
 
 
-let DonorsList = (props) => (
-    <div>
-        {props.donors.map((donor) => (
-            <Donor {...donor} key={donor.name} />
-        ))}
-    </div>
-);
+let DonorsList = (props) => {
+    let style = {
+        marginBottom: 10
+    };
+
+    return (
+        <div style={style}>
+            {props.donors.map((donor) => (
+                <Donor {...donor} key={donor.name} />
+            ))}
+        </div>
+    );
+};
 
 
 let Donor = (props) => {
