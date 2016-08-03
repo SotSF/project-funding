@@ -16,7 +16,7 @@ class DonorsPage extends React.Component {
 
     componentDidMount () {
         getOnce('data/donorData.json')
-            .then((data) => this.setState({ data: data }))
+            .then((data) => this.setState({ data }))
             .catch((xhr) => this.setState({ errorCode: xhr.status }));
     }
 
@@ -32,7 +32,14 @@ class DonorsPage extends React.Component {
             }
         };
 
-        let donorsList = this.state.data && <DonorsList donors={this.state.data} key="donors" />;
+        let donorsList = this.state.data && (
+            <DonorsList
+                donors={this.state.data}
+                dues={this.state.dues}
+                key="donors"
+            />
+        );
+
         let errorCode = this.state.errorCode && (
             <div style={styles.error} key="error">
                 Request for donor data returned with {this.state.errorCode} error
@@ -64,8 +71,8 @@ let DonorsList = (props) => (
 
 let Donor = (props) => {
     let styles = {
-        name: {
-
+        wrapper: {
+            marginTop: 10
         }
     };
 
@@ -73,10 +80,10 @@ let Donor = (props) => {
     // amount with the name)
     let requiredDonation = 50,
         donation         = props.donations > requiredDonation ? requiredDonation : props.donations;
-        
+
     return (
-        <div>
-            <div>{props.name}</div>
+        <div style={styles.wrapper}>
+            <div>{props.name} (${props.donations})</div>
             <LinearProgress
                 mode="determinate"
                 value={donation / requiredDonation * 100}
