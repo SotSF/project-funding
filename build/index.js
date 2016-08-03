@@ -64791,9 +64791,13 @@ var DonorsPage = function (_React$Component) {
 }(_react2.default.Component);
 
 var DonorsList = function DonorsList(props) {
+    var style = {
+        marginBottom: 10
+    };
+
     return _react2.default.createElement(
         'div',
-        null,
+        { style: style },
         props.donors.map(function (donor) {
             return _react2.default.createElement(Donor, _extends({}, donor, { key: donor.name }));
         })
