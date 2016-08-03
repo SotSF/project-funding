@@ -35,6 +35,6 @@ class GitHubLogo extends React.Component {
             </a>
         );
     }
-};
+}
 
 export default GitHubLogo;

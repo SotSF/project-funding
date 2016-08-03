@@ -107,9 +107,9 @@ function getProjectImage (projectName) {
 
 
 function getProjectExpenditures (projectData) {
-    var expendituresStartRow = 25,
-        itemCol = _.findWhere(projectData, { row: 24, _value: 'Item' }).col,
-        costCol = _.findWhere(projectData, { row: 24, _value: 'Cost' }).col;
+    var expendituresStartRow = 32,
+        itemCol = _.findWhere(projectData, { row: 31, _value: 'Item' }).col,
+        costCol = _.findWhere(projectData, { row: 31, _value: 'Cost' }).col;
 
     return _.chain(projectData)
         .filter(function (cell) {
