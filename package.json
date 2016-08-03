@@ -26,7 +26,7 @@
     "grunt-exorcise": "2.1.1"
   },
   "scripts": {
-    "fetch": "node ./src/scripts/getProjectData.js"
+    "fetch": "node ./src/scripts/fetch.js"
   },
   "author": "",
   "license": "ISC"
