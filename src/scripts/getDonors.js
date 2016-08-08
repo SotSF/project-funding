@@ -19,7 +19,7 @@ async.series([
             var crowd_funding_ws = _.findWhere(info.worksheets, { title: 'Crowd Funding' });
             crowd_funding_ws.getCells({
                 'min-row': 13,
-                'max-row': 22,
+                'max-row': 29,
                 'min-col': 2,
                 'max-col': 52
             }, function (err, cells) {
