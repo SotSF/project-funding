@@ -70,15 +70,37 @@ let DonorsList = (props) => {
         marginBottom: 10
     };
 
+    let memberDonations;
+    if (props.dues) {
+        memberDonations = _.map(
+            _.groupBy([...props.dues.campMembers, ...props.donors], 'name'),
+            ((arr) => Object.assign({}, ...arr))
+        );
+    } else {
+        memberDonations = [];
+    }
+
+    // Sort by amount paid
+    memberDonations.sort((member1, member2) => {
+        let donation1 = member1.donations || 0,
+            donation2 = member2.donations || 0;
+
+        if (donation1 > donation2) {
+            return 1
+        } else if (donation1 < donation2) {
+            return -1;
+        } else {
+            return 0;
+        }
+    });
+
     return (
         <div style={style}>
-            {props.dues && _.map(props.dues.campMembers, (memberDues) => {
-                console.log(_.findWhere(props.donors, { name: memberDues.name }));
+            {_.map(memberDonations, (memberData) => {
                 return (
                     <Donor
-                        {...memberDues}
-                        donor={_.findWhere(props.donors, { name: memberDues.name })}
-                        key={memberDues.name}
+                        {...memberData}
+                        key={memberData.name}
                     />
                 )
             })}
@@ -96,20 +118,16 @@ let Donor = (props) => {
 
     // Cap the donation amount at 50 for the purposes of the progress bar (show actual donation
     // amount with the name)
-    let requiredDonation = props.owes,
+    let requiredDonation = props.owes || -1,
         donation;
 
-    if (props.donor) {
-        donation = props.donor.donations > requiredDonation
-            ? requiredDonation
-            : props.donor.donations;
-    } else {
-        donation = 0;
-    }
+    donation = props.donations > requiredDonation
+        ? requiredDonation
+        : props.donations;
 
     return (
         <div style={styles.wrapper}>
-            <div>{props.name} (${props.donor ? props.donor.donations : 0 })</div>
+            <div>{props.name} (${props.donations ? props.donations : 0 })</div>
             <LinearProgress
                 mode="determinate"
                 value={donation / requiredDonation * 100}

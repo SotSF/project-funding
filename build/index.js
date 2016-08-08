@@ -64716,6 +64716,8 @@ var _util = require('../util');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -64806,14 +64808,35 @@ var DonorsList = function DonorsList(props) {
         marginBottom: 10
     };
 
+    var memberDonations = void 0;
+    if (props.dues) {
+        memberDonations = _underscore2.default.map(_underscore2.default.groupBy([].concat(_toConsumableArray(props.dues.campMembers), _toConsumableArray(props.donors)), 'name'), function (arr) {
+            return Object.assign.apply(Object, [{}].concat(_toConsumableArray(arr)));
+        });
+    } else {
+        memberDonations = [];
+    }
+
+    // Sort by amount paid
+    memberDonations.sort(function (member1, member2) {
+        var donation1 = member1.donations || 0,
+            donation2 = member2.donations || 0;
+
+        if (donation1 > donation2) {
+            return 1;
+        } else if (donation1 < donation2) {
+            return -1;
+        } else {
+            return 0;
+        }
+    });
+
     return _react2.default.createElement(
         'div',
         { style: style },
-        props.dues && _underscore2.default.map(props.dues.campMembers, function (memberDues) {
-            console.log(_underscore2.default.findWhere(props.donors, { name: memberDues.name }));
-            return _react2.default.createElement(Donor, _extends({}, memberDues, {
-                donor: _underscore2.default.findWhere(props.donors, { name: memberDues.name }),
-                key: memberDues.name
+        _underscore2.default.map(memberDonations, function (memberData) {
+            return _react2.default.createElement(Donor, _extends({}, memberData, {
+                key: memberData.name
             }));
         })
     );
@@ -64828,14 +64851,10 @@ var Donor = function Donor(props) {
 
     // Cap the donation amount at 50 for the purposes of the progress bar (show actual donation
     // amount with the name)
-    var requiredDonation = props.owes,
+    var requiredDonation = props.owes || -1,
         donation = void 0;
 
-    if (props.donor) {
-        donation = props.donor.donations > requiredDonation ? requiredDonation : props.donor.donations;
-    } else {
-        donation = 0;
-    }
+    donation = props.donations > requiredDonation ? requiredDonation : props.donations;
 
     return _react2.default.createElement(
         'div',
@@ -64845,7 +64864,7 @@ var Donor = function Donor(props) {
             null,
             props.name,
             ' ($',
-            props.donor ? props.donor.donations : 0,
+            props.donations ? props.donations : 0,
             ')'
         ),
         _react2.default.createElement(_materialUi.LinearProgress, {
